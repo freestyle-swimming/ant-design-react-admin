@@ -12,6 +12,12 @@
     "react-scripts": "3.0.1",
     "typescript": "3.5.3"
   },
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "husky": "^3.0.3",
+    "lint-staged": "^9.2.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -31,6 +37,35 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "src/**/*.css": [
+      "stylelint --fix",
+      "git add"
+    ],
+    "src/**/*.scss": [
+      "stylelint --syntax=scss --fix",
+      "git add"
+    ],
+    "src/**/*.less": [
+      "stylelint --syntax=less --fix",
+      "git add"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
     ]
   }
 }
