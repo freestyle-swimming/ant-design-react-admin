@@ -1,8 +1,18 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { requestGetUserInfo } from './api/index';
+import requestErrorHandler from './api/utils/requestErrorHandler';
 
 const App = (): JSX.Element => {
+  requestGetUserInfo({ userId: 123 })
+    .then((data) => {
+      window.console.log(data);
+    })
+    .catch((error) => {
+      requestErrorHandler(error);
+    });
+
   return (
     <div className="App">
       <header className="App-header">

@@ -1,10 +1,13 @@
 import axios from 'axios';
 import AxiosWrapper from './axiosWrapper';
 
+import requestErrorHandler from './requestErrorHandler';
 export { default as requestErrorHandler } from './requestErrorHandler';
 
-window.addEventListener('unhandledrejection', (error: PromiseRejectionEvent) => {
-  window.console.log(error);
+window.addEventListener('unhandledrejection', (evt: PromiseRejectionEvent) => {
+  evt.promise.catch((err) => {
+    requestErrorHandler(err);
+  });
 });
 
 const service = axios.create({
@@ -16,6 +19,19 @@ const service = axios.create({
 service.interceptors.request.use((config) => config, (error) => Promise.reject(error));
 
 // Add a response interceptor
-service.interceptors.response.use((response) => response, (error) => Promise.reject(error));
+service.interceptors.response.use(
+  (response) => {
+    window.console.log(response);
+    const { data } = response;
+    Object.assign(response, {
+      data: {
+        errmsg: data.error_desc,
+        errcode: data.error_no
+      }
+    });
+    return response;
+  },
+  (error) => Promise.reject(error)
+);
 
 export default new AxiosWrapper(service);

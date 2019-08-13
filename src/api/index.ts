@@ -4,6 +4,13 @@ import { ApiData } from './utils/axiosWrapper';
 interface GetUserInfoParams {
   userId: number;
 }
-export const requestGetUserInfo = (params: GetUserInfoParams): Promise<ApiData> => {
-  return request.get('/api/userInfo', { params });
+interface GetUserInfoReturnData {
+  userName: string;
+  address: string;
+  phoneNumber: number;
+}
+export const requestGetUserInfo = (
+  params: GetUserInfoParams
+): Promise<ApiData<GetUserInfoReturnData>> => {
+  return request.get('/jq/user/enterprise/getAccount', { params });
 };

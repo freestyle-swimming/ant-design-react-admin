@@ -1,6 +1,7 @@
 /**
  * 业务异常
  */
+import { message as Message } from 'antd';
 class BusinessError extends Error {
   public code: number;
 
@@ -10,8 +11,7 @@ class BusinessError extends Error {
   }
 
   public defaultHandler = () => {
-    // Message.error(this.message);
-    window.console.error(this.message);
+    Message.error(this.message);
   };
 }
 
