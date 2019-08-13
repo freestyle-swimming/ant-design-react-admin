@@ -10,12 +10,12 @@ export interface ApiData<T = any> {
 
 class AxiosWraper {
   public axiosInstance: AxiosInstance;
+
   public constructor(axiosInstance: AxiosInstance) {
     this.axiosInstance = axiosInstance;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public wrapRequest(request: AxiosPromise<ApiData>): Promise<any> {
+  public wrapRequest(request: AxiosPromise<ApiData>): Promise<ApiData> {
     return request
       .then((res) => {
         const { data } = res;
@@ -41,7 +41,7 @@ class AxiosWraper {
       });
   }
 
-  public get(url: string, config: AxiosRequestConfig): Promise<ApiData> {
+  public get(url: string, config?: AxiosRequestConfig): Promise<ApiData> {
     return this.wrapRequest(this.axiosInstance.get(url, config));
   }
 }
