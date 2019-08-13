@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -8,11 +9,15 @@ module.exports = {
   ],
   plugins: ["react", "@typescript-eslint", "prettier"],
   env: {
+    "node": true,
+    "es6": true,
     "browser": true,
     "jest": true
   },
   rules: {
-    "prettier/prettier": ["error", { "singleQuote": true }]
+    "prettier/prettier": ["error", { "singleQuote": true }],
+    '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
+    '@typescript-eslint/promise-function-async': 'off',
   },
   settings: {
     "react": {
